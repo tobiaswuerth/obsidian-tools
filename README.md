@@ -4,6 +4,8 @@ a CLI application for
 - for the [Obsidian.md](https://obsidian.md/) vault
 - written with .net core
 
+You can find [the latest release by clicking here](https://github.com/tobiaswuerth/obsidian-tools/releases)!
+
 #### Feel free to contribute or submit ideas! You can get in contact with me via [fooo.ooo](https://fooo.ooo/)
 
 > **Please be careful!**
