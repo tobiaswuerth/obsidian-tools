@@ -185,3 +185,8 @@ Cleaning up done, removed 584 dead links
 ===========================================
 Finished plugin: Cleanup dead links
 ```
+
+If you compare the two files you can see the links which got removed.
+Tipp: Use a version control tool like Git to track changes.
+![Example Report](https://dl.dropboxusercontent.com/s/wl4t4llh4jt8kys/2020-08-05_13-38-06.gif)
+
