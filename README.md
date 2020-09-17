@@ -4,25 +4,30 @@ a CLI application for
 - for the [Obsidian.md](https://obsidian.md/) vault
 - written with .net core
 
-You can find [the latest release by clicking here](https://github.com/tobiaswuerth/obsidian-tools/releases)!
+> ### You can find [the latest release by clicking here](https://github.com/tobiaswuerth/obsidian-tools/releases/tag/v0.2)!
+> #### Feel free to contribute or submit ideas! You can get in contact with me via [fooo.ooo](https://fooo.ooo/)
 
-#### Feel free to contribute or submit ideas! You can get in contact with me via [fooo.ooo](https://fooo.ooo/)
+**Please be careful!**
+These tools are under construction and may cause loss of data.
+Make sure you have a backup of your vault before executing any commands!
 
-> **Please be careful!**
-> These tools are under construction and may cause loss of data. Make sure you have a backup of your vault before executing any commands!
-
-## Help Overview
+# Help Overview
 ```
 PS >.\ch.wuerth.tobias.ObsidianTools.exe
 Usage: exe <vault-path> <plugin-name> [<additional1>, ...]
 Plugins:
-        --count             Counts all markdown files
-        --analyze           Analyze markdown files and create word report
-        --find-references   Find all files referencing the given keywords
-        --cleanup           Cleanup dead links
+        --count                 Counts all markdown files
+        --analyze               Analyze markdown files and create word report
+        --find-references       Find all files referencing the given keywords
+        --create-references     Create file reference for all unlinked mentions
+        --cleanup               Cleanup dead links
+        --list-dead             List all dead links
+        --create-dead           Create all dead link files
 ```
 
-## Examples
+---
+
+# Examples
 Some example for the individuel plugins
 
 ### Count
@@ -36,7 +41,7 @@ Example output:
 ```
 Starting plugin: Counts all markdown files
 ===========================================
-Found 281 markdown files in given directory
+Found 383 markdown files in given directory
 ===========================================
 Finished plugin: Counts all markdown files
 ```
@@ -57,60 +62,7 @@ This can help you get insights into your knowledge.
 ```ps
 PS >.\ch.wuerth.tobias.ObsidianTools.exe C:\myvault --analyze
 ```
-
-Example output:
-```
-Starting plugin: Analyze markdown files and create word report
-===========================================
-Starting to analyze words in files...
-Analyzing words done
--------------
-Top 10
- - Words (occurred 7440x) (0x similar: <none>, ..) @ (0x referenced: <none>, ..)
- - --- (occurred 3766x) (0x similar: <none>, ..) @ (0x referenced: <none>, ..)
- - Counted (occurred 3720x) (0x similar: <none>, ..) @ (0x referenced: <none>, ..)
- - Similar (occurred 3720x) (0x similar: <none>, ..) @ (0x referenced: <none>, ..)
- - References (occurred 3720x) (0x similar: <none>, ..) @ (0x referenced: <none>, ..)
- - Psychology (occurred 1082x) (0x similar: <none>, ..) @ (0x referenced: <none>, ..)
- - Projekt (occurred 908x) (0x similar: <none>, ..) @ (0x referenced: <none>, ..)
- - und (occurred 483x) (0x similar: <none>, ..) @ (0x referenced: <none>, ..)
- - Marketing (occurred 450x) (0x similar: <none>, ..) @ (0x referenced: <none>, ..)
- - Management (occurred 407x) (0x similar: <none>, ..) @ (0x referenced: <none>, ..)
--------------
-Starting to search for similar words...
-Searching for similar words done
--------------
-Top 10
- - ung (occurred 3x) (309x similar: Arbeitsvermittlungszentrum, Anstellung, Segmentierungskriterium, ..) @ (0x referenced: <none>, ..)
- - ich (occurred 20x) (221x similar: Fehlermöglichkeits-, Pflichtenheft, Statusbericht, ..) @ (0x referenced: <none>, ..)
- - Ich (occurred 4x) (221x similar: Fehlermöglichkeits-, Pflichtenheft, Statusbericht, ..) @ (0x referenced: <none>, ..)
- - Ein (occurred 36x) (134x similar: Einflussanalyse, eine, ein, ..) @ (0x referenced: <none>, ..)
- - ein (occurred 52x) (134x similar: Einflussanalyse, eine, ein, ..) @ (0x referenced: <none>, ..)
- - pro (occurred 5x) (97x similar: Projekt, Projektdesign, Projektmanagement, ..) @ (0x referenced: <none>, ..)
- - den (occurred 57x) (88x similar: Kundenmerkmal, den, Kundenzufriedenheit, ..) @ (0x referenced: <none>, ..)
- - Der (occurred 15x) (82x similar: der, Anforderung, Leadership, ..) @ (0x referenced: <none>, ..)
- - der (occurred 197x) (82x similar: der, Anforderung, Leadership, ..) @ (0x referenced: <none>, ..)
- - sen (occurred 4x) (74x similar: Präsenz, Arbeitslosenkasse, Applikationsentwickler, ..) @ (0x referenced: <none>, ..)
--------------
-Starting to search for word references in files...
-Searching for references done
--------------
-Top 10
- - sie (occurred 16x) (36x similar: siehe, Realisierung, Sie, ..) @ (184x referenced: C:\myvault\3R Kundenbeziehungs-Phasen.md, C:\myvault\5-Phasen Modell.md, C:\myvault\5-Why-Methode.md, ..)
- - Sie (occurred 22x) (36x similar: siehe, Realisierung, Sie, ..) @ (184x referenced: C:\myvault\3R Kundenbeziehungs-Phasen.md, C:\myvault\5-Phasen Modell.md, C:\myvault\5-Why-Methode.md, ..)
- - siehe (occurred 207x) (1x similar: siehe, ..) @ (168x referenced: C:\myvault\3R Kundenbeziehungs-Phasen.md, C:\myvault\5-Phasen Modell.md, C:\myvault\5-Why-Methode.md, ..)
- - ung (occurred 3x) (309x similar: Arbeitsvermittlungszentrum, Anstellung, Segmentierungskriterium, ..) @ (162x referenced: C:\myvault\5-Why-Methode.md, C:\myvault\Abenteuer.md, C:\myvault\Abgrenzung.md, ..)
- - Auch (occurred 7x) (8x similar: auch, braucht, brauchen, ..) @ (147x referenced: C:\myvault\3R Kundenbeziehungs-Phasen.md, C:\myvault\5-Phasen Modell.md, C:\myvault\5-Why-Methode.md, ..)
- - auch (occurred 155x) (8x similar: auch, braucht, brauchen, ..) @ (147x referenced: C:\myvault\3R Kundenbeziehungs-Phasen.md, C:\myvault\5-Phasen Modell.md, C:\myvault\5-Why-Methode.md, ..)
- - ein (occurred 52x) (134x similar: Einflussanalyse, eine, ein, ..) @ (132x referenced: C:\myvault\5-Why-Methode.md, C:\myvault\Ablauf- und Terminplan.md, C:\myvault\Anforderung.md, ..)
- - Ein (occurred 36x) (134x similar: Einflussanalyse, eine, ein, ..) @ (132x referenced: C:\myvault\5-Why-Methode.md, C:\myvault\Ablauf- und Terminplan.md, C:\myvault\Anforderung.md, ..)
- - Der (occurred 15x) (82x similar: der, Anforderung, Leadership, ..) @ (128x referenced: C:\myvault\5-Why-Methode.md, C:\myvault\Abenteuer.md, C:\myvault\Ablauf- und Terminplan.md, ..)
- - der (occurred 197x) (82x similar: der, Anforderung, Leadership, ..) @ (128x referenced: C:\myvault\5-Why-Methode.md, C:\myvault\Abenteuer.md, C:\myvault\Ablauf- und Terminplan.md, ..)
-Creating result file...
-Creating result file done, you can find it here: obsidiantools-output-analyze-20200805-144734.md
-===========================================
-Finished plugin: Analyze markdown files and create word report
-```
+see also: [Example output](https://pastebin.com/Z6HM3LSY)
 
 If you open the resulting output file in Obsidian, you should see something like this:
 ![Example Report](https://dl.dropboxusercontent.com/s/4ugn1kx4769h2h2/Obsidian_2020-08-05_14-49-58.png)
@@ -133,7 +85,7 @@ Starting plugin: Find all files referencing the given keywords
 Starting to search for word references...
 Searching for references done
 Creating result file...
-Creating result file done, you can find it here: obsidiantools-output-references-20200805-145645.md
+Creating result file done, you can find it here: obsidiantools-output-references-20200917-210340.md
 ===========================================
 Finished plugin: Find all files referencing the given keywords
 ```
@@ -141,6 +93,20 @@ Finished plugin: Find all files referencing the given keywords
 If you open the resulting output file in Obsidian, you should see something like this:
 ![Example Report](https://dl.dropboxusercontent.com/s/n2q9eht7mpkf2lv/Obsidian_2020-08-05_14-57-25.png)
 
+---
+
+### Create References
+Analyzes the words of all the `.md` files in the directory, including sub-directories.
+Searches for matching words based on the `.md` filename and link it to the document. Basically linking unlinked mentions. 
+This can be very helpful if you want to cleanup your vault and improve bidirectional linking between the topics you already created.
+
+```ps
+PS >.\ch.wuerth.tobias.ObsidianTools.exe C:\myvault --create-references
+```
+see also: [Example output](https://pastebin.com/6CuNz1Yr)
+
+If you open the resulting output file in Obsidian, you should see something like this:
+![Example Changes](https://dl.dropboxusercontent.com/s/xkpi4224i5oautk/2020-09-17_21-21-30.gif)
 
 ---
 
@@ -150,45 +116,69 @@ Searches for links, validates if the destination file exists and has content, ot
 Empty files will be deleted in this process.
 This can be very helpful if you have a lot of links which do not yet have a backing document.
 
-**ToDo:**
-- [ ] Fix Section links (e.g. `[[Anforderung#Formulierung|Anforderungsformulierung]]`)
-
 ```ps
 PS >.\ch.wuerth.tobias.ObsidianTools.exe C:\myvault --cleanup
 ```
-
-Example output:
-```
-Starting plugin: Cleanup dead links
-===========================================
-Starting to cleanup...
-Dead link found: link 'C:\myvault\Marktabgrenzung.md' for match '[[Marktabgrenzung]]' ('Marktabgrenzung')
-Dead link found: link 'C:\myvault\Abhängigkeit.md' for match '[[Abhängigkeit]]' ('Abhängigkeit')
-Dead link found: link 'C:\myvault\kritischer Pfad.md' for match '[[kritischer Pfad]]' ('kritischer Pfad')
-Dead link found: link 'C:\myvault\Tool.md' for match '[[Tool]]' ('Tool')
-Dead link found: link 'C:\myvault\Evaluation.md' for match '[[Evaluation]]' ('Evaluation')
-Dead link found: link 'C:\myvault\Produkt.md' for match '[[Produkt]]' ('Produkt')
-Dead link found: link 'C:\myvault\Vermittler.md' for match '[[Vermittler]]' ('Vermittler')
-Dead link found: link 'C:\myvault\Unternehmen.md' for match '[[Unternehmen]]' ('Unternehmen')
-Dead link found: link 'C:\myvault\Karriere.md' for match '[[Karriere]]' ('Karriere')
-Dead link found: link 'C:\myvault\Pfad.md' for match '[[Pfad]]' ('Pfad')
-[...]
-Dead link found: link 'C:\myvault\Gewinn.md' for match '[[Gewinn]]' ('Gewinn')
-Dead link found: link 'C:\myvault\Mitarbeiter.md' for match '[[Mitarbeiter]]' ('Mitarbeiter')
-Dead link found: link 'C:\myvault\Bekanntheitsgrad.md' for match '[[Bekanntheitsgrad]]' ('Bekanntheitsgrad')
-Dead link found: link 'C:\myvault\Anforderung#Formulierung.md' for match '[[Anforderung#Formulierung|Anforderungsformulierung]]' ('Anforderung#Formulierung|Anforderungsformulierung')
-Dead link found: link 'C:\myvault\Positionierung.md' for match '[[Positionierung]]' ('Positionierung')
-Dead link found: link 'C:\myvault\Vergangenheit.md' for match '[[Vergangenheit]]' ('Vergangenheit')
-Dead link found: link 'C:\myvault\Lesen.md' for match '[[Lesen]]' ('Lesen')
-Dead link found: link 'C:\myvault\Person.md' for match '[[Person]]' ('Person')
-Dead link found: link 'C:\myvault\Alternativen.md' for match '[[Alternativen]]' ('Alternativen')
-Dead link found: link 'C:\myvault\Intuition.md' for match '[[Intuition]]' ('Intuition')
-Cleaning up done, removed 584 dead links
-===========================================
-Finished plugin: Cleanup dead links
-```
+see also: [Example output](https://pastebin.com/zDP9MBWX)
 
 If you compare the two files you can see the links which got removed.
 Tipp: Use a version control tool like Git to track changes.
 ![Example Report](https://dl.dropboxusercontent.com/s/wl4t4llh4jt8kys/2020-08-05_13-38-06.gif)
 
+---
+
+### List Dead
+List all the dead links in the `.md` files in the directory, including sub-directories.
+Searches for links, validates if the destination file exists and has content, otherwise prints the dead link.
+This can be very helpful if you have a lot of links which do not yet have a backing document.
+This can also be used as a first step before executing `--cleanup` or `--create-dead`.
+
+```ps
+PS >.\ch.wuerth.tobias.ObsidianTools.exe C:\myvault --list-dead
+```
+
+Example Output:
+```
+Starting plugin: List all dead links
+===========================================
+Searching for dead links...
+Loading files into memory...
+Files loaded
+Searching for dead links done
+Creating result file done, you can find it here: obsidiantools-output-dead-20200917-212947.md
+===========================================
+Finished plugin: List all dead links
+```
+
+If you compare the two files you can see the links which got removed.
+Tipp: Use a version control tool like Git to track changes.
+![Example Report](https://dl.dropboxusercontent.com/s/2fy08uiuq17br90/Obsidian_2020-09-17_21-35-35.png)
+
+---
+
+### Create Dead
+Analyzes all the `.md` files in the directory, including sub-directories.
+Searches for links, validates if the destination file exists and has content, otherwise creates the destination file with a `#todo` mark for easy lookup.
+This can be very helpful if you plan to add sections for topics and therefor add links which do not exist yet.
+
+```ps
+PS >.\ch.wuerth.tobias.ObsidianTools.exe C:\myvault --create-dead
+```
+
+Example Output:
+```
+Starting plugin: Create all dead link files
+===========================================
+Creating dead links...
+Loading files into memory...
+Files loaded
+Created dead links
+Creating result file done, you can find it here: obsidiantools-output-created-20200917-213829.md
+Note: You might have to restart your Obsidian.md client in order to correctly index all new files
+===========================================
+Finished plugin: Create all dead link files
+```
+
+Tipp: Use a version control tool like Git to track changes.
+
+![Example Report](https://dl.dropboxusercontent.com/s/9ug9tps0mjv1o0w/Obsidian_2020-09-17_21-40-40.png)
