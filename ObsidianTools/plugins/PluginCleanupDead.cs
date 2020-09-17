@@ -6,9 +6,9 @@ using System.Text;
 
 namespace ObsidianTools.plugins
 {
-    public class PluginCleanup : Plugin
+    public class PluginCleanupDead : Plugin
     {
-        public PluginCleanup() : base("--cleanup", "Cleanup dead links") { }
+        public PluginCleanupDead() : base("--cleanup", "Cleanup dead links") { }
 
         protected override void Handle(PluginPayload payload)
         {

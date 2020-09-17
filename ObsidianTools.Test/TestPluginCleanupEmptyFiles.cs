@@ -13,7 +13,7 @@ namespace ObsidianTools.Test
             String path = RandomFilePath;
             PrepareFile(path, " \n  \r \t   ");
 
-            new PluginCleanup().Execute(new[]
+            new PluginCleanupDead().Execute(new[]
                 {
                     VaultDirectory
                 }

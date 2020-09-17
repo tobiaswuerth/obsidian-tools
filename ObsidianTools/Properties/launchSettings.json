@@ -2,7 +2,7 @@
   "profiles": {
     "ObsidianTools": {
       "commandName": "Project",
-      "commandLineArgs": "C:\\Users\\Tobias\\Desktop\\tmp --cleanup"
+      "commandLineArgs": "C:\\Users\\Tobias\\Desktop\\tmp --list-dead"
     }
   }
 }

@@ -23,8 +23,10 @@ namespace ObsidianTools
             }
         }
 
+        public Boolean HasChanged { get; private set; }
+
         public FileInfo Info { get; }
-        public String Content { get; }
+        public String Content { get; private set; }
         public Boolean HasContents { get; }
 
         public List<MarkdownLink> Links
@@ -38,6 +40,27 @@ namespace ObsidianTools
         public Boolean IsHealthy()
         {
             return Info.Exists && HasContents;
+        }
+
+        public void SaveChanges()
+        {
+            if (!HasChanged)
+            {
+                return;
+            }
+
+            File.WriteAllText(Info.FullName, Content);
+        }
+
+        public void SetContent(String content)
+        {
+            if (String.Equals(Content, content))
+            {
+                return;
+            }
+
+            HasChanged = true;
+            Content = content;
         }
 
         public override String ToString()

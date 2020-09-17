@@ -15,7 +15,8 @@ namespace ObsidianTools
             new PluginCount()
             , new PluginAnalyze()
             , new PluginFindReferences()
-            , new PluginCleanup()
+            , new PluginCreateReferences()
+            , new PluginCleanupDead()
             , new PluginListDead()
             , new PluginCreateDead()
         };

@@ -44,7 +44,7 @@ namespace ObsidianTools.Test
             }
         }
 
-        protected static String FilePathForName(String name)
+        protected static String GetFilePathForName(String name)
         {
             return Path.Join(VaultDirectory, $"{name}.md");
         }

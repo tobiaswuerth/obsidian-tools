@@ -8,12 +8,12 @@ namespace ObsidianTools.Test
         [ Test ]
         public void Test()
         {
-            PrepareFile(FilePathForName("Index"), "das ist ein [[Index]], find [[SubA#b]], [[SubB|abc]]");
-            PrepareFile(FilePathForName("SubA"), "dead end, back to [[Index]]");
-            PrepareFile(FilePathForName("SubB"), "anther one, might be interested in [[SubA]] ? or [[Hub]]");
-            PrepareFile(FilePathForName("Hub"), "[[SubC]], [[SubD]]");
-            PrepareFile(FilePathForName("SubC"), "nichts, nicht wie HubD");
-            PrepareFile(FilePathForName("SubD"), "go back to [[Hub]], or [[Index]]");
+            PrepareFile(GetFilePathForName("Index"), "das ist ein [[Index]], find [[SubA#b]], [[SubB|abc]]");
+            PrepareFile(GetFilePathForName("SubA"), "dead end, back to [[Index]]");
+            PrepareFile(GetFilePathForName("SubB"), "anther one, might be interested in [[SubA]] ? or [[Hub]]");
+            PrepareFile(GetFilePathForName("Hub"), "[[SubC]], [[SubD]]");
+            PrepareFile(GetFilePathForName("SubC"), "nichts, nicht wie HubD");
+            PrepareFile(GetFilePathForName("SubD"), "go back to [[Hub]], or [[Index]]");
 
             new PluginAnalyze().Execute(new[]
                 {

@@ -21,7 +21,15 @@ namespace ObsidianTools
 
         public static String GetAbsoluteFileName(String directory, String name)
         {
-            if (!name.Contains("."))
+            List<String> knownFileExtensions = new List<String>
+            {
+                ".pdf"
+                , ".png"
+                , ".jpg"
+                , ".jpeg"
+            };
+            String lowerName = name.ToLower();
+            if (!knownFileExtensions.Any(e => lowerName.EndsWith(e)))
             {
                 name += ".md";
             }
