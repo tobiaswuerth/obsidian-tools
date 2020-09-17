@@ -28,8 +28,34 @@ namespace ObsidianTools.Test
 
             files.ForEach(f => PrepareFile(GetFilePathForName(f.Name), f.Before));
 
-            PluginCreateReferences plugin = new PluginCreateReferences();
-            plugin.Execute(new[]
+            new PluginCreateReferences().Execute(new[]
+                {
+                    VaultDirectory
+                }
+                , VaultDirectory);
+
+            files.ForEach(f =>
+            {
+                String path = Path.Combine(VaultDirectory, $"{f.Name}.md");
+                String content = File.ReadAllText(path, Encoding.UTF8);
+                Assert.AreEqual(f.After, content);
+            });
+        }
+
+        [ Test ]
+        public void Test_Links()
+        {
+            List<(String Name, String Before, String After)> files = new List<(String, String, String)>
+            {
+                ("Index", "this is Job anjobother Room aroom- [Job Room](https://www.job-room.ch/) url test blub"
+                    , "this is [[Job]] an[[Job|job]]other [[Room]] a[[Room|room]]- [Job Room](https://www.job-room.ch/) url test blub")
+                , ("Room", "a", "a")
+                , ("Job", "c", "c")
+            };
+
+            files.ForEach(f => PrepareFile(GetFilePathForName(f.Name), f.Before));
+
+            new PluginCreateReferences().Execute(new[]
                 {
                     VaultDirectory
                 }

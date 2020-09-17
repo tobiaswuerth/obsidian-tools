@@ -61,6 +61,8 @@ namespace ObsidianTools.plugins
 
         private static Boolean StringIsPartOfLink(String content)
         {
+            // not replace [[a]], and [b g](www.c.de) hijklm
+            Boolean startedQuote = false;
             while (0 < content.Length)
             {
                 if (content.EndsWith("[["))
@@ -71,6 +73,21 @@ namespace ObsidianTools.plugins
                 if (content.EndsWith("]]"))
                 {
                     return false;
+                }
+
+                if (content.EndsWith("["))
+                {
+                    return true;
+                }
+
+                if (content.EndsWith("("))
+                {
+                    startedQuote = true;
+                }
+
+                if (content.EndsWith("]"))
+                {
+                    return startedQuote;
                 }
 
                 content = content[..^1];
