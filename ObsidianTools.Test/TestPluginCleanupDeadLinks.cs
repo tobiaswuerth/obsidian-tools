@@ -12,12 +12,14 @@ namespace ObsidianTools.Test
         public void Test()
         {
             const String TEXT_BEFORE =
-                "pre [[a]], [[b#c]], [[d|e]], [[f#g|h]]\r\n[[Index]], [[Index#2]], [[Index|index]], [[Index#3|yea]] suf";
-            const String TEXT_AFTER = "pre a, b#c, e, h\r\n[[Index]], [[Index#2]], [[Index|index]], [[Index#3|yea]] suf";
+                "pre [[a]], [[b#c]], [[d|e]], [[f#g|h]]\r\n[[Index]], [[Index#2]], [[Index|index]], [[Index#3|yea]] suf ![[embedded]] [[image2.png|text]] [[image3.png]] [[image4.png|text2]] [[image5.png]]";
+            const String TEXT_AFTER =
+                "pre a, b#c, e, h\r\n[[Index]], [[Index#2]], [[Index|index]], [[Index#3|yea]] suf ![[embedded]] [[image2.png|text]] [[image3.png]] text2 image5.png";
 
-            String path = Path.Join(VaultDirectory, "Index.md");
+            String path = FilePathForName("Index");
             PrepareFile(path, TEXT_BEFORE);
-
+            PrepareFile(Path.Join(VaultDirectory, "image2.png"), "a");
+            PrepareFile(Path.Join(VaultDirectory, "image3.png"), "a");
             new PluginCleanup().Execute(new[]
                 {
                     VaultDirectory

@@ -21,7 +21,12 @@ namespace ObsidianTools
 
         public static String GetAbsoluteFileName(String directory, String name)
         {
-            return Path.Join(directory, $"{name}.md");
+            if (!name.Contains("."))
+            {
+                name += ".md";
+            }
+
+            return Path.Join(directory, name);
         }
 
         public static Boolean HasContent(String path)
