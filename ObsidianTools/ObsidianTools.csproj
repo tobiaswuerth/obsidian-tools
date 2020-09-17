@@ -8,6 +8,7 @@
     <Copyright>Tobias Würth</Copyright>
     <PackageProjectUrl>https://github.com/tobiaswuerth/obsidian-tools</PackageProjectUrl>
     <RepositoryUrl>https://github.com/tobiaswuerth/obsidian-tools</RepositoryUrl>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
 </Project>

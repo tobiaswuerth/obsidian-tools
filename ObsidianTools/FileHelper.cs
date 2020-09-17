@@ -8,39 +8,43 @@ namespace ObsidianTools
 {
     public static class FileHelper
     {
-        public static String CreateFileReference(String fileName)
+        public static String CreateMarkdownLinkList(List<MarkdownLink> links)
         {
-            return $"[[{fileName}]]";
-        }
-
-        public static String CreateFileReferenceList(List<String> files)
-        {
-            if (null == files || 1 > files.Count)
+            if (null == links || 1 > links.Count)
             {
                 return "<none>";
             }
 
-            files.Sort();
-            return files.Select(CreateFileReference).Aggregate(CollectionHelper.AggregateWithComma);
+            links.Sort((a, b) => String.Compare(a.ToString(), b.ToString(), StringComparison.Ordinal));
+            return links.Select(f => f.ToString()).Aggregate(CollectionHelper.AggregateWithComma);
         }
 
-        public static String GetFileNameWithoutExtension(String fullName)
+        public static String GetAbsoluteFileName(String directory, String name)
         {
-            if (null == fullName || !File.Exists(fullName))
+            return Path.Join(directory, $"{name}.md");
+        }
+
+        public static Boolean HasContent(String path)
+        {
+            if (null == path)
             {
-                return String.Empty;
+                return false;
             }
 
             try
             {
-                FileInfo i = new FileInfo(fullName);
-                String name = i.Name.Replace(i.Extension, "");
-                return name;
+                if (!File.Exists(path))
+                {
+                    return false;
+                }
+
+                String text = File.ReadAllText(path, Encoding.UTF8);
+                return !String.IsNullOrEmpty(text?.Trim());
             }
             catch (Exception x)
             {
-                LogHelper.LogException($"Warning: Could not get file info for file @ {fullName}", x);
-                return String.Empty;
+                LogHelper.LogException($"Warning: Could read contents of file @ {path}. Assuming it exists", x);
+                return true;
             }
         }
 
@@ -50,25 +54,14 @@ namespace ObsidianTools
          */
         public static Boolean TryDeleteEmptyFile(String file)
         {
-            if (null == file)
-            {
-                return false;
-            }
-
             try
             {
-                if (!File.Exists(file))
-                {
-                    return true;
-                }
-
-                String text = File.ReadAllText(file, Encoding.UTF8);
-                if (!String.IsNullOrEmpty(text?.Trim()))
+                Boolean hasContents = HasContent(file);
+                if (hasContents)
                 {
                     return false;
                 }
 
-                // seems to be an existing, empty file
                 File.Delete(file);
                 return !File.Exists(file);
             }

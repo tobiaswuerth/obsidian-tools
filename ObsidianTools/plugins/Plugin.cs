@@ -15,12 +15,42 @@ namespace ObsidianTools.plugins
             Description = description;
         }
 
-        public void Execute(String[] args, String path)
+        public void Execute(String[] cliArgs, String vaultDirectory)
         {
-            IEnumerable<String> markdownFiles = Directory.EnumerateFiles(path, "*.md", SearchOption.AllDirectories);
-            Handle(args, markdownFiles);
+            Handle(new PluginPayload
+            {
+                ConsoleArguments = cliArgs
+                , VaultDirectory = vaultDirectory
+            });
         }
 
-        protected abstract void Handle(String[] args, IEnumerable<String> files);
+        protected IEnumerable<String> GetMarkdownFilePaths(String directory)
+        {
+            return Directory.EnumerateFiles(directory, "*.md", SearchOption.AllDirectories);
+        }
+
+        protected abstract void Handle(PluginPayload payload);
+
+        protected List<MarkdownFile> ReadFiles(IEnumerable<String> paths)
+        {
+            List<MarkdownFile> content = new List<MarkdownFile>();
+
+            Console.WriteLine("Loading files into memory...");
+            foreach (String path in paths)
+            {
+                try
+                {
+                    content.Add(new MarkdownFile(path));
+                }
+                catch (Exception x)
+                {
+                    LogHelper.LogException($"An error occurred reading file '{path}'", x);
+                }
+            }
+
+            Console.WriteLine("Files loaded");
+
+            return content;
+        }
     }
 }

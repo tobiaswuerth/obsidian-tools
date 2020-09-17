@@ -12,14 +12,14 @@ namespace ObsidianTools.plugins
 
         public PluginAnalyze() : base("--analyze", "Analyze markdown files and create word report") { }
 
-        private List<WordStatistic> AnalyzeMarkdownFiles(IEnumerable<String> files)
+        private List<WordStatistic> AnalyzeMarkdownFiles(List<MarkdownFile> files)
         {
             Console.WriteLine("Starting to analyze words in files...");
-            foreach (String filePath in files)
+            foreach (MarkdownFile file in files)
             {
                 try
                 {
-                    HandleFile(filePath);
+                    HandleFile(file);
                 }
                 catch (Exception x)
                 {
@@ -48,8 +48,8 @@ namespace ObsidianTools.plugins
                     String similar = CollectionHelper.CommaSeparatedList(s.SimilarWords.Select(s => s.Word));
                     writer.WriteLine($"Similar Words: {similar}");
 
-                    List<String> fileReferences = s.FileReferences.Select(FileHelper.GetFileNameWithoutExtension).ToList();
-                    String references = FileHelper.CreateFileReferenceList(fileReferences);
+                    List<MarkdownLink> links = s.FileReferences.Select(MarkdownLink.ForFile).ToList();
+                    String references = FileHelper.CreateMarkdownLinkList(links);
                     writer.WriteLine($"References Words: {references}");
                     writer.WriteLine("");
                     writer.WriteLine("---");
@@ -80,20 +80,22 @@ namespace ObsidianTools.plugins
             PrintStats(stats, (a, b) => a.SimilarWords.Count.CompareTo(b.SimilarWords.Count) * -1);
         }
 
-        private void FindWordReferences(IEnumerable<String> files, List<WordStatistic> stats)
+        private void FindWordReferences(List<MarkdownFile> files, List<WordStatistic> stats)
         {
             Console.WriteLine("-------------");
             Console.WriteLine("Starting to search for word references in files...");
-            foreach (String filePath in files)
+            foreach (MarkdownFile file in files)
             {
                 try
                 {
-                    String text = File.ReadAllText(filePath).ToLower();
-                    stats.Where(s => text.Contains(s.Word.ToLower())).ToList().ForEach(s => s.FileReferences.Add(filePath));
+                    String text = file.Content.ToLower();
+                    stats.Where(s => text.Contains(s.Word.ToLower()))
+                        .ToList()
+                        .ForEach(s => s.FileReferences.Add(file.Info.Name.Replace(file.Info.Extension, String.Empty)));
                 }
                 catch (Exception x)
                 {
-                    LogHelper.LogException($"An error occurred searching for file references in path '{filePath}'", x);
+                    LogHelper.LogException($"An error occurred searching for file references in path '{file}'", x);
                 }
             }
 
@@ -101,20 +103,21 @@ namespace ObsidianTools.plugins
             PrintStats(stats, (a, b) => a.FileReferences.Count.CompareTo(b.FileReferences.Count) * -1);
         }
 
-        protected override void Handle(String[] args, IEnumerable<String> eFiles)
+        protected override void Handle(PluginPayload payload)
         {
-            List<String> files = eFiles.ToList();
+            IEnumerable<String> filePaths = GetMarkdownFilePaths(payload.VaultDirectory).ToList();
+            List<MarkdownFile> files = ReadFiles(filePaths);
             List<WordStatistic> stats = AnalyzeMarkdownFiles(files);
             FindSimilarWords(stats);
             FindWordReferences(files, stats);
             CreateResultFile(stats);
         }
 
-        private void HandleFile(String filePath)
+        private void HandleFile(MarkdownFile file)
         {
             // normalize text
-            String text = File.ReadAllText(filePath);
             RegexOptions options = RegexOptions.Multiline | RegexOptions.IgnoreCase;
+            String text = file.Content;
             text = Regex.Replace(text, "[^a-zA-Z0-9@äöüÄÖÜ-]+", " ", options);
             text = Regex.Replace(text, "[ ]+", " ", options);
             List<String> words = text.Split(" ").ToList();

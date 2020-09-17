@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace ObsidianTools.plugins
 {
@@ -10,7 +9,7 @@ namespace ObsidianTools.plugins
     {
         public PluginFindReferences() : base("--find-references", "Find all files referencing the given keywords") { }
 
-        private void CreateResultFile(HashSet<String> keywords, HashSet<String> files)
+        private void CreateResultFile(HashSet<String> keywords, List<MarkdownFile> files)
         {
             Console.WriteLine("Creating result file...");
             String outputPath = $"obsidiantools-output-references-{DateTime.Now:yyyyMMdd-HHmmss}.md";
@@ -18,26 +17,27 @@ namespace ObsidianTools.plugins
             {
                 writer.WriteLine("Found the following references");
                 writer.WriteLine($"### {CollectionHelper.CommaSeparatedList(keywords)}");
-                String referenceList = FileHelper.CreateFileReferenceList(files.ToList());
+                List<MarkdownLink> links = files.Select(MarkdownLink.ForFile).ToList();
+                String referenceList = FileHelper.CreateMarkdownLinkList(links);
                 writer.WriteLine(referenceList);
             }
 
             Console.WriteLine($"Creating result file done, you can find it here: {outputPath}");
         }
 
-        private HashSet<String> FindReferences(IEnumerable<String> eFiles, HashSet<String> keywords)
+        private HashSet<MarkdownFile> FindReferences(IEnumerable<String> eFiles, HashSet<String> keywords)
         {
             Console.WriteLine("Starting to search for word references...");
-            HashSet<String> files = new HashSet<String>();
+            HashSet<MarkdownFile> files = new HashSet<MarkdownFile>();
             foreach (String filePath in eFiles)
             {
                 try
                 {
-                    String text = File.ReadAllText(filePath, Encoding.UTF8);
-                    String lText = text.ToLower();
+                    MarkdownFile file = new MarkdownFile(filePath);
+                    String lText = file.Content.ToLower();
                     if (keywords.Any(k => lText.Contains(k)))
                     {
-                        files.Add(FileHelper.GetFileNameWithoutExtension(filePath));
+                        files.Add(file);
                     }
                 }
                 catch (Exception x)
@@ -71,16 +71,17 @@ namespace ObsidianTools.plugins
             return keywords;
         }
 
-        protected override void Handle(String[] args, IEnumerable<String> eFiles)
+        protected override void Handle(PluginPayload payload)
         {
-            HashSet<String> keywords = GetKeywords(args);
+            HashSet<String> keywords = GetKeywords(payload.ConsoleArguments);
             if (1 > keywords.Count)
             {
                 Console.WriteLine("No valid keyword found");
                 return;
             }
 
-            HashSet<String> files = FindReferences(eFiles, keywords);
+            IEnumerable<String> filePaths = GetMarkdownFilePaths(payload.VaultDirectory);
+            List<MarkdownFile> files = FindReferences(filePaths, keywords).ToList();
             CreateResultFile(keywords, files);
         }
     }
