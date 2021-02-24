@@ -21,8 +21,11 @@ Plugins:
         --find-references       Find all files referencing the given keywords
         --create-references     Create file reference for all unlinked mentions
         --cleanup               Cleanup dead links
+        --cleanup-assets        Move all unreferenced [jpg|jpeg|pdf|png] files into subfolder .\_UNUSED\
+        --identify-hotspots     Find the top nodes which are most often linked to
         --list-dead             List all dead links
         --create-dead           Create all dead link files
+        --reduce-noise          (beta) Create a tree-like structure starting from a given entry point
 ```
 
 ---
