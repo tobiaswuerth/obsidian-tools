@@ -21,6 +21,7 @@ namespace ObsidianTools
             , new PluginIdentifyHotspots()
             , new PluginListDead()
             , new PluginCreateDead()
+            , new PluginReduceNoise()
         };
 
         private Program(String[] args)

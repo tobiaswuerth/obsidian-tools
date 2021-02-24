@@ -15,6 +15,29 @@ namespace ObsidianTools.plugins
             Console.WriteLine("Starting to identify-hotspots...");
             List<String> markdownFiles = GetMarkdownFilePaths(payload.VaultDirectory).ToList();
             List<MarkdownFile> files = ReadFiles(markdownFiles);
+            Dictionary<String, HashSet<String>> referenceCount = CreateReferenceDict(files);
+
+            Console.WriteLine($"Found the following reference counds:");
+            List<KeyValuePair<String, HashSet<String>>> orderedResult = referenceCount.OrderByDescending(kv => kv.Value.Count).ToList();
+            
+            String outputPath = $"obsidiantools-output-hotspots-{DateTime.Now:yyyyMMdd-HHmmss}.md";
+            using (StreamWriter writer = File.CreateText(outputPath))
+            {
+                writer.WriteLine("### Identified Hotspots");
+                writer.WriteLine("The following were counted:");
+                foreach ((String source, HashSet<String> linkedTo) in orderedResult.Take(10))
+                {
+                    writer.WriteLine($" - {linkedTo.Count}x [[{source}]]");
+                    Console.WriteLine($" - {linkedTo.Count}x {source}");
+                }
+            }
+            
+            Console.WriteLine("Identify-hotspots done");
+            Console.WriteLine($"Creating result file done, you can find it here: {outputPath}");
+        }
+
+        public static Dictionary<String, HashSet<String>> CreateReferenceDict(List<MarkdownFile> files)
+        {
             Dictionary<String, HashSet<String>> referenceCount = new Dictionary<String, HashSet<String>>();
             foreach (MarkdownFile file in files)
             {
@@ -33,7 +56,10 @@ namespace ObsidianTools.plugins
                         }
                         else
                         {
-                            referenceCount[link.FileName] = new HashSet<String>{file.Info.Name};
+                            referenceCount[link.FileName] = new HashSet<String>
+                            {
+                                file.Info.Name
+                            };
                         }
                     }
                 }
@@ -43,24 +69,7 @@ namespace ObsidianTools.plugins
                 }
             }
 
-            
-            Console.WriteLine($"Found the following reference counds:");
-            List<KeyValuePair<String, HashSet<String>>> orderedResult = referenceCount.OrderByDescending(kv => kv.Value.Count).ToList();
-            
-            String outputPath = $"obsidiantools-output-hotspots-{DateTime.Now:yyyyMMdd-HHmmss}.md";
-            using (StreamWriter writer = File.CreateText(outputPath))
-            {
-                writer.WriteLine("### Identified Hotspots");
-                writer.WriteLine("The following were counted:");
-                foreach ((String source, HashSet<String> linkedTo) in orderedResult.Take(10))
-                {
-                    writer.WriteLine($" - {linkedTo.Count}x [[{source}]]");
-                    Console.WriteLine($" - {linkedTo.Count}x {source}");
-                }
-            }
-            
-            Console.WriteLine("Identify-hotspots done");
-            Console.WriteLine($"Creating result file done, you can find it here: {outputPath}");
+            return referenceCount;
         }
     }
 }
