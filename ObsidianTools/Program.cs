@@ -18,6 +18,7 @@ namespace ObsidianTools
             , new PluginCreateReferences()
             , new PluginCleanupDead()
             , new PluginCleanupAssets()
+            , new PluginIdentifyHotspots()
             , new PluginListDead()
             , new PluginCreateDead()
         };
