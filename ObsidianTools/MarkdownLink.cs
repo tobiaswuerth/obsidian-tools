@@ -15,14 +15,14 @@ namespace ObsidianTools
         public String ChapterName { get; set; }
         public String DisplayName { get; set; }
 
-        public static List<MarkdownLink> ForContent(String content)
+        public static List<MarkdownLink> ForContent(String content, Boolean ignoreEmbedded = true)
         {
             List<MarkdownLink> links = new List<MarkdownLink>();
 
             MatchCollection matches = Regex.Matches(content, REGEX_MARKDOWN_LINK_PATTERN, RegexOptions.IgnoreCase);
             foreach (Match match in matches)
             {
-                if (match.Value.StartsWith("!"))
+                if (ignoreEmbedded && match.Value.StartsWith("!"))
                 {
                     // ignore embedded links
                     continue;

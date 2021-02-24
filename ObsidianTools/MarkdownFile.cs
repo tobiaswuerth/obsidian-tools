@@ -8,6 +8,7 @@ namespace ObsidianTools
     public class MarkdownFile
     {
         private List<MarkdownLink> _links;
+        private List<MarkdownLink> _linksEmbedded;
 
         public MarkdownFile(String path)
         {
@@ -36,6 +37,20 @@ namespace ObsidianTools
                 return _links ??= MarkdownLink.ForContent(Content);
             }
         }
+        public String FileName
+        {
+            get
+            {
+                return Info?.Name.Replace(Info?.Extension, "");
+            }
+        }
+        public List<MarkdownLink> LinksInklEmbedded
+        {
+            get
+            {
+                return _linksEmbedded ??= MarkdownLink.ForContent(Content, false);
+            }
+        }
 
         public Boolean IsHealthy()
         {
@@ -61,6 +76,7 @@ namespace ObsidianTools
 
             HasChanged = true;
             Content = content;
+            _links = null;
         }
 
         public override String ToString()

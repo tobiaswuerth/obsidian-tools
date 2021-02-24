@@ -29,6 +29,11 @@ namespace ObsidianTools.plugins
             return Directory.EnumerateFiles(directory, "*.md", SearchOption.AllDirectories);
         }
 
+        protected IEnumerable<String> GetVaultFilePaths(String directory)
+        {
+            return Directory.EnumerateFiles(directory, "*.*", SearchOption.AllDirectories);
+        }
+
         protected abstract void Handle(PluginPayload payload);
 
         protected List<MarkdownFile> ReadFiles(IEnumerable<String> paths)

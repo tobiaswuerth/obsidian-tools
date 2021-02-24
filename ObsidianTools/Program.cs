@@ -17,8 +17,11 @@ namespace ObsidianTools
             , new PluginFindReferences()
             , new PluginCreateReferences()
             , new PluginCleanupDead()
+            , new PluginCleanupAssets()
+            , new PluginIdentifyHotspots()
             , new PluginListDead()
             , new PluginCreateDead()
+            , new PluginReduceNoise()
         };
 
         private Program(String[] args)

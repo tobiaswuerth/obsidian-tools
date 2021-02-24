@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace ObsidianTools.plugins
 {
@@ -19,7 +20,7 @@ namespace ObsidianTools.plugins
                 FileInfo info = file.Info;
                 String word = info.Name.Replace(info.Extension, String.Empty);
                 Console.WriteLine($"Processing '{word}'...");
-                files.ForEach(f =>
+                files.Except(new []{file}).ToList().ForEach(f =>
                 {
                     ProcessFile(f, word, word);
                     ProcessFile(f, word, word.ToLower());
