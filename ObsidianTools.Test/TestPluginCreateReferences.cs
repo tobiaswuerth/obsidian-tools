@@ -15,13 +15,13 @@ namespace ObsidianTools.Test
             List<(String Name, String Before, String After)> files = new List<(String, String, String)>
             {
                 ("Index", "das hier ist der Index. ich habe Projekte und Management Aufgaben"
-                    , "das hier ist der [[Index]]. ich habe [[Projekt]]e und Management Aufgaben")
+                    , "das hier ist der Index. ich habe [[Projekt]]e und Management Aufgaben")
                 , ("Projekt", "ein Unterfangen, AnotherDocument welches vom Manager oder der Managerin geleitet wird"
                     , "ein Unterfangen, [[AnotherDocument]] welches vom [[Manager]] oder der [[Manager]]in geleitet wird")
                 , ("Manager", "chef, siehe Index, leitet Projekte, Projektmanager auch Projektmanagement, Seniormanager"
-                    , "chef, siehe [[Index]], leitet [[Projekt]]e, [[Projektmanager]] auch [[Projekt]]management, Senior[[Manager|manager]]")
-                , ("AnotherDocument", "chef, siehe Index,[[ leitet Projekte]], auch Projektmanagement, Seniormanager"
-                    , "chef, siehe [[Index]],[[ leitet Projekte]], auch [[Projekt]]management, Senior[[Manager|manager]]")
+                    , "chef, siehe [[Index]], leitet [[Projekt]]e, [[Projektmanager]] auch [[Projekt]]management, Seniormanager")
+                , ("AnotherDocument", "chef, siehe Index,[[ leitet Projekte]], auch Projektmanagement AnotherDocument, Seniormanager"
+                    , "chef, siehe [[Index]],[[ leitet Projekte]], auch [[Projekt]]management AnotherDocument, Senior[[Manager|manager]]")
                 , ("Projektmanager", "chef, siehe [[Index, leitet Projekte, auch Projektmanagement]], SENIORMANAGER"
                     , "chef, siehe [[Index, leitet Projekte, auch Projektmanagement]], SENIOR[[Manager|MANAGER]]")
             };
